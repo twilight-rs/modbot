@@ -12,5 +12,3 @@ tracing-subscriber = { version = "0.2" }
 twilight-gateway = { default-features = false, features = ["rustls", "simd-json", "simd-zlib"], version = "0.2" }
 twilight-http = { default-features = false, features = ["rustls", "simd-json"], version = "0.2" }
 twilight-model = { default-features = false, version = "0.2" }
-twilight-standby = { default-features = false, version = "0.2" }
-twilight-util = { default-features = false, features = ["snowflake"], version = "0.2" }
