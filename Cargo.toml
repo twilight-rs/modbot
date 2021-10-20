@@ -1,0 +1,16 @@
+[package]
+name = "twilight-modbot"
+version = "0.1.0"
+authors = ["Zeyla Hellyer <zeyla@hellyer.dev>", "Cassandra McCarthy <cassie@7596ff.com>"]
+edition = "2018"
+
+[dependencies]
+chrono = "0.4"
+futures-util = { default-features = false, version = "0.3" }
+tokio = { default-features = false, features = ["macros", "rt-threaded", "time"], version = "0.2" }
+tracing-subscriber = { version = "0.2" }
+twilight-gateway = { default-features = false, features = ["rustls", "simd-json", "simd-zlib"], version = "0.2" }
+twilight-http = { default-features = false, features = ["rustls", "simd-json"], version = "0.2" }
+twilight-model = { default-features = false, version = "0.2" }
+twilight-standby = { default-features = false, version = "0.2" }
+twilight-util = { default-features = false, features = ["snowflake"], version = "0.2" }
