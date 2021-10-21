@@ -22,17 +22,17 @@ const COLOR_ROLES: [RoleId; 5] = [
 
 /// Where the bot actually takes place.
 async fn run() -> Result<(), Box<dyn Error>> {
-    // Initialize the tracing subscriber
+    // Initialize the tracing subscriber.
     tracing_subscriber::fmt::init();
 
-    // Get the token from the environment
+    // Get the token from the environment.
     let token = env::var("DISCORD_TOKEN")?;
 
-    // Initialize the HTTP client
+    // Initialize the HTTP client.
     let http = Client::new(token.clone());
 
     // Since this bot should only be in one guild, initialize and start
-    // up only one shard
+    // up only one shard.
     let (shard, mut events) = Shard::new(token, Intents::GUILD_MEMBERS);
     shard.start().await?;
 
@@ -69,7 +69,7 @@ async fn run() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-/// Entry point to the bot
+/// Entry point to the bot.
 ///
 /// It starts up the `run` function, catches and reports any error that
 /// might have happened, and exits.
