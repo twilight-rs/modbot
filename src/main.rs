@@ -1,6 +1,6 @@
 use futures_util::stream::StreamExt;
 use std::{env, error::Error};
-use twilight_gateway::{Event, EventTypeFlags, Intents, Shard};
+use twilight_gateway::{Event, Intents, Shard};
 use twilight_http::Client;
 use twilight_model::id::{GuildId, RoleId};
 
@@ -33,8 +33,7 @@ async fn run() -> Result<(), Box<dyn Error>> {
 
     // Since this bot should only be in one guild, initialize and start
     // up only one shard
-    let mut shard = Shard::new(token, Intents::GUILD_MEMBERS);
-    let mut events = shard.some_events(EventTypeFlags::MEMBER_ADD);
+    let (shard, mut events) = Shard::new(token, Intents::GUILD_MEMBERS);
     shard.start().await?;
 
     // Process events as they come in.
@@ -50,6 +49,7 @@ async fn run() -> Result<(), Box<dyn Error>> {
 
                 // Add the base twilight role to all new members.
                 http.add_guild_member_role(TWILIGHT_GUILD_ID, user_id, TWILIGHT_BASE_ROLE)
+                    .exec()
                     .await?;
 
                 // Choose a color role based off of the user's ID.
@@ -59,6 +59,7 @@ async fn run() -> Result<(), Box<dyn Error>> {
                     user_id,
                     COLOR_ROLES[choice as usize],
                 )
+                .exec()
                 .await?;
             }
             _ => {}
