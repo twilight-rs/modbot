@@ -3,6 +3,7 @@ name = "twilight-modbot"
 version = "0.1.0"
 authors = ["Zeyla Hellyer <zeyla@hellyer.dev>", "Cassandra McCarthy <cassie@7596ff.com>"]
 edition = "2018"
+license = "ISC"
 
 [dependencies]
 chrono = "0.4"
