@@ -2,7 +2,10 @@ use futures_util::stream::StreamExt;
 use std::{env, error::Error};
 use twilight_gateway::{Event, Intents, Shard};
 use twilight_http::Client;
-use twilight_model::id::{GuildId, RoleId};
+use twilight_model::{
+    channel::{Channel, GuildChannel},
+    id::{ChannelId, GuildId, RoleId},
+};
 
 /// 5 different roles which we like to set to colors based on the season
 /// in North America.
@@ -29,6 +32,11 @@ async fn run() -> Result<(), Box<dyn Error>> {
         GuildId::new(745809834183753828).expect("non zero")
     }
 
+    // ID of the #support channel in the Twilight guild.
+    fn twilight_support_channel_id() -> ChannelId {
+        ChannelId::new(745811192102125578).expect("non zero")
+    }
+
     // Get the token from the environment.
     let token = env::var("DISCORD_TOKEN")?;
 
@@ -37,7 +45,7 @@ async fn run() -> Result<(), Box<dyn Error>> {
 
     // Since this bot should only be in one guild, initialize and start
     // up only one shard.
-    let (shard, mut events) = Shard::new(token, Intents::GUILD_MEMBERS);
+    let (shard, mut events) = Shard::new(token, Intents::GUILDS | Intents::GUILD_MEMBERS);
     shard.start().await?;
 
     // Process events as they come in.
@@ -65,6 +73,21 @@ async fn run() -> Result<(), Box<dyn Error>> {
                 )
                 .exec()
                 .await?;
+            }
+            Event::ThreadCreate(thread_create) => {
+                if let Channel::Guild(GuildChannel::PublicThread(public_thread)) = thread_create.0 {
+                    // Process new threads in the #support channel.
+                    if public_thread.parent_id != Some(twilight_support_channel_id()) {
+                        continue;
+                    }
+
+                    // Set the thread slow mode to the same value as the parent
+                    // channel.
+                    http.update_thread(public_thread.id)
+                        .rate_limit_per_user(60)?
+                        .exec()
+                        .await?;
+                }
             }
             _ => {}
         }
