@@ -84,7 +84,7 @@ async fn run() -> Result<(), Box<dyn Error>> {
                     // Set the thread slow mode to the same value as the parent
                     // channel.
                     http.update_thread(public_thread.id)
-                        .rate_limit_per_user(60)?
+                        .rate_limit_per_user(30)?
                         .exec()
                         .await?;
                 }
