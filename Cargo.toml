@@ -9,7 +9,7 @@ license = "ISC"
 chrono = "0.4"
 futures-util = { default-features = false, version = "0.3" }
 tokio = { default-features = false, features = ["macros", "rt"], version = "1" }
-tracing-subscriber = { version = "0.2" }
-twilight-gateway = { default-features = false, features = ["rustls-native-roots"], version = "0.9" }
-twilight-http = { default-features = false, features = ["rustls-native-roots"], version = "0.9" }
-twilight-model = { default-features = false, version = "0.9" }
+tracing-subscriber = { version = "0.3" }
+twilight-gateway = { default-features = false, features = ["rustls-native-roots"], version = "0.10.0" }
+twilight-http = { default-features = false, features = ["rustls-native-roots"], version = "0.10.0" }
+twilight-model = { default-features = false, version = "0.10.0" }
