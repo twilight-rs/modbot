@@ -1,3 +1,4 @@
 Cargo.lock
 deploy.sh
 target/
+.vscode/
