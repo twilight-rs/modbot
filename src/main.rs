@@ -36,7 +36,7 @@ async fn run() -> Result<(), Box<dyn Error>> {
 
     // Since this bot should only be in one guild, initialize and start
     // up only one shard.
-    let (shard, mut events) = Shard::new(token, Intents::GUILDS | Intents::GUILD_MEMBERS).await?;
+    let (shard, mut events) = Shard::new(token, Intents::GUILDS | Intents::GUILD_MEMBERS);
     shard.start().await?;
 
     // Process events as they come in.
