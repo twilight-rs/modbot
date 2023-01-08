@@ -33,19 +33,14 @@ async fn run() -> Result<(), Box<dyn Error>> {
     // Initialize the HTTP client.
     let http = Client::new(token.clone());
 
-    // Since this bot should only be in one guild, initialize and start
-    // up only one shard.
+    // Since this bot should only be in one guild, initialize one shard.
     let mut shard = Shard::new(
         ShardId::ONE,
         token,
         Intents::GUILDS | Intents::GUILD_MEMBERS,
     );
 
-    // Process events as they come in.
-    //
-    // This uses the [`StreamExt::next`] method as a convenience.
-    //
-    // [`StreamExt::next`]: futures_util::stream::StreamExt::next
+    // Process events as they come in. This also starts the shard.
     while let Ok(event) = shard.next_event().await {
         match event {
             // Process new members.
